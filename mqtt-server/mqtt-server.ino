@@ -7,6 +7,7 @@ byte mac[] = {
 };
 
 IPAddress ip(10, 197, 12, 6);
+IPAddress ipHome(192, 168, 1, 200);
 IPAddress gateway(10,197,8,1); // Gateway da sua rede local
 IPAddress dnsServer(8, 8, 8, 8);   // Servidor DNS (Google DNS)
 
@@ -35,7 +36,7 @@ void connectToMqtt() {
 void lightController(char* topic, byte* payload, unsigned int length) {
   String message;
   Serial.print(topic);
-  Serial.print(": Recived Message");
+  Serial.print(": Recived Message - ");
   for (int i = 0; i < length; i++) {
     message += (char)payload[i];
     Serial.print((char)payload[i]);
@@ -56,7 +57,9 @@ void setup() {
   Serial.println("Ethernet MQTT Device Server");
 
   // start the Ethernet connection and the server:
-  Ethernet.begin(mac, ip, dnsServer, gateway);
+  //TODO: Trocar para ip quando for levar para católica
+  //TODO: Trocar para gateway quando for levar para católica
+  Ethernet.begin(mac, ipHome, dnsServer);
 
   // Check for Ethernet hardware present
   if (Ethernet.hardwareStatus() == EthernetNoHardware) {
